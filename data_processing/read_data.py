@@ -86,4 +86,21 @@ def get_data_by_storm(storm, input_length = 3):
                 points.append(row[1:])
     return points
 
-print(get_data_by_storm("Caroline", 7))
+# print(get_data_by_storm("Caroline", 7))
+
+
+# categorizes into 1 of 4 buckets
+# see https://medium.com/@kap923/hurricane-path-prediction-using-deep-learning-2f9fbb390f18 for source of idea
+def categorize_location(lat, long):
+    bucket = 0
+    if float(lat) > 20: 
+        bucket |= 2
+    
+    if float(long) > 70:
+        bucket |= 1
+    
+    return bucket
+
+# for i in get_data_by_storm("Eloise", 7):
+#     print(i[1] + ", " + i[2])
+#     print(categorize_location(i[1], i[2]))
