@@ -29,6 +29,8 @@ def flatten(xss):
 # turn list of points into segments, keep name for id purposes
 def segment_storm_data(input_length = 2):
     points_by_storm = {}
+    current_storm = ""
+    id = 0
     with open("./stripped_storms.csv") as input:
         csv_reader = csv.reader(input, delimiter=',')
         header = True
@@ -38,7 +40,11 @@ def segment_storm_data(input_length = 2):
                 continue
             if len(row) == 0:
                 continue
-            point = points_by_storm.setdefault(row[0], [])
+            # new storm!
+            if row[0] != current_storm:
+                id += 1
+                current_storm = row[0]
+            point = points_by_storm.setdefault(row[0] + "_" + str(id), [])
             row = row[1:]
             point.append(row)
     
@@ -66,9 +72,9 @@ def segment_storm_data(input_length = 2):
             storm_writer.writerow(point)
     return
 
-# read_storm_data()
-# for i in range(3, 11):
-#     segment_storm_data(i)
+read_storm_data()
+for i in range(3, 11):
+    segment_storm_data(i)
 
 
 def get_data_by_storm(storm, input_length = 3):
