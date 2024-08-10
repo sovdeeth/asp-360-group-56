@@ -57,7 +57,7 @@ def segment_storm_data(input_length = 2):
 
     columns = ["name"]
     for i in range(input_length):
-        columns.extend([(x + "_" + str(i)) for x in ["day_of_year","lat","long","wind"]])
+        columns.extend([(x + "_" + str(i)) for x in ["hour_of_year","lat","long","wind"]])
 
     with open("./segmented_data_" + str(input_length) +"s.csv", "w", newline='') as output:
         storm_writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
