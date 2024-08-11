@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 def read_data_np(segment_length):
-    df = pd.read_csv('../data_processing/segmented_data_' + str(segment_length) + 's.csv', header=None, skiprows = 1)
+    df = pd.read_csv('./data_processing/segmented_data_' + str(segment_length) + 's.csv', header=None, skiprows = 1)
     data = []
 
     for i in range(len(df)):

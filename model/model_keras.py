@@ -67,8 +67,9 @@ def create_model(segment_length, input_features, output_features = 3):
     return model
 
 def train(model, train, valid, batch_size=32, epochs=50, iteration = 0):
+    global segments
     history = model.fit(train[0], train[1], batch_size, epochs, validation_data=(valid[0], valid[1]))
-    model.save('./output/Model Trials/Model_{}_({}-{}).keras'.format(iteration, batch_size, epochs))
+    model.save('./output/Model Trials/Model_{}_S{}_(B{}-E{}).keras'.format(iteration, segments, batch_size, epochs))
 
     plt.plot(history.history['loss'][2:])
     plt.plot(history.history['val_loss'][2:])
@@ -76,7 +77,7 @@ def train(model, train, valid, batch_size=32, epochs=50, iteration = 0):
     plt.ylabel('mse')
     plt.xlabel('epoch')
     plt.legend(['train', 'val'], loc='upper left')
-    plt.savefig('./output/Model Trials/Training_Curve-Model_{}_({}-{})'.format(iteration, batch_size, epochs))
+    plt.savefig('./output/Model Trials/Training_Curve-Model_{}_S{}_(B{}-E{})'.format(iteration, segments, batch_size, epochs))
     plt.show()
 
     plt.plot(history.history['lat_deviation'])
@@ -89,16 +90,20 @@ def train(model, train, valid, batch_size=32, epochs=50, iteration = 0):
     plt.ylabel('deviation (degrees)')
     plt.xlabel('epoch')
     plt.legend(['train_lat', 'train_long', 'train_wind', 'val_lat', 'val_long', 'val_wind'], loc='upper left')
-    plt.savefig('./output/Model Trials/Deviation_Curve-Model_{}_({}-{})'.format(iteration, batch_size, epochs))
+    plt.savefig('./output/Model Trials/Deviation_Curve-Model_{}_S{}_(B{}-E{})'.format(iteration, segments, batch_size, epochs))
     plt.show()
 
 
-segments = 3
-features = 4
 
-epochs = 50
-batch_size = 16
 
-train_set, valid_set, test_set, normalizer = get_data(segments, features)
-model = create_model(segments, features)
-train(model, train_set, valid_set, batch_size, epochs)
+# iteration = 1
+
+# segments = 5
+# features = 4
+
+# epochs = 50
+# batch_size = 16
+
+# train_set, valid_set, test_set, normalizer = get_data(segments, features)
+# model = create_model(segments, features)
+# train(model, train_set, valid_set, batch_size, epochs)
