@@ -73,11 +73,11 @@ def segment_storm_data(input_length = 2):
     return
 
 read_storm_data()
-for i in range(3, 11):
+for i in range(2, 11):
     segment_storm_data(i)
 
 
-def get_data_by_storm(storm, input_length = 3):
+def get_data_by_storm(storm, input_length = 2):
     points = []
     with open("./segmented_data_" + str(input_length) + "s.csv") as input:
         csv_reader = csv.reader(input, delimiter=',')
