@@ -96,14 +96,14 @@ def train(model, train, valid, batch_size=32, epochs=50, iteration = 0):
 
 
 
-# iteration = 1
+iteration = 3
 
-# segments = 5
-# features = 4
+segments = 3
+features = 8
 
-# epochs = 50
-# batch_size = 16
+epochs = 32
+batch_size = 32
 
-# train_set, valid_set, test_set, normalizer = get_data(segments, features)
-# model = create_model(segments, features)
-# train(model, train_set, valid_set, batch_size, epochs)
+train_set, valid_set, test_set, normalizer = get_data(segments, features)
+model = create_model(segments, features)
+train(model, train_set, valid_set, batch_size, epochs, iteration)

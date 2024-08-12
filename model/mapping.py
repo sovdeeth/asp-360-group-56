@@ -8,7 +8,7 @@ from PIL import Image
 
 def get_data_by_storm(storm, input_length = 2):
     points = []
-    with open("./data_processing/segmented_data_" + str(input_length) + "s.csv") as input:
+    with open("./data_processing/segmented_data_" + str(input_length) + "s_cat.csv") as input:
         csv_reader = csv.reader(input, delimiter=',')
         header = True
         for row in csv_reader:
@@ -70,7 +70,7 @@ def map_against_storm(storm, model, normalizer, segments, features):
         pred_coordinates['windspeed'].append(windspeed)
 
         # shift input
-        input = np.concatenate((input[1:], [[norm_truth_labels[i][0], output[0][0], output[0][1], output[0][2]]]))
+        input = np.concatenate((input[1:], [[norm_truth_labels[i][0], output[0][0], output[0][1], output[0][2], input[0][4],input[0][5],input[0][6],input[0][7]]]))
     
     df = pd.DataFrame(pred_coordinates)
     df2 = pd.DataFrame(true_coordinates)
@@ -115,15 +115,15 @@ def map_against_storm(storm, model, normalizer, segments, features):
 
             # Set lines to different colors based on windspeed
         if df2.iloc[i]['windspeed'] >= 40:
-            folium.PolyLine([p1, p2], color='red', weight=2.5, opacity=1).add_to(eq_map)
+            folium.PolyLine([p1, p2], color='red', weight=2.5, opacity=1, dash_array='10').add_to(eq_map)
         elif 40 > df2.iloc[i]['windspeed'] >= 30:
-            folium.PolyLine([p1, p2], color='orange', weight=2.5, opacity=1).add_to(eq_map)
+            folium.PolyLine([p1, p2], color='orange', weight=2.5, opacity=1, dash_array='10').add_to(eq_map)
         elif 30 > df2.iloc[i]['windspeed'] >= 20:
-            folium.PolyLine([p1, p2], color='yellow', weight=2.5, opacity=1).add_to(eq_map)
+            folium.PolyLine([p1, p2], color='yellow', weight=2.5, opacity=1, dash_array='10').add_to(eq_map)
         elif 20 > df2.iloc[i]['windspeed'] >= 10:
-            folium.PolyLine([p1, p2], color='green', weight=2.5, opacity=1).add_to(eq_map)
+            folium.PolyLine([p1, p2], color='green', weight=2.5, opacity=1, dash_array='10').add_to(eq_map)
         elif 10 > df2.iloc[i]['windspeed'] >= 0:
-            folium.PolyLine([p1, p2], color='blue', weight=2.5, opacity=1).add_to(eq_map)
+            folium.PolyLine([p1, p2], color='blue', weight=2.5, opacity=1, dash_array='10').add_to(eq_map)
 
     # Add a marker for the starting point of the second set of coordinates
     starting_point2 = df2.iloc[0][['lat', 'long']].tolist()
@@ -136,11 +136,12 @@ def map_against_storm(storm, model, normalizer, segments, features):
     eq_map.save("./output/Model Trials/Predictions_Map_"+name+"_Storm_"+storm+".html")
 
 
-segments = 5
+segments = 3
+features = 8
 
 data = read_data_np(segments)
-normalizer = DataNormalizer(data, segments, 4)
-name = "Model_0_S5_(B16-E50)"
+normalizer = DataNormalizer(data, segments, features)
+name = "Model_3_S3_(B32-E32)"
 model = keras.saving.load_model("output\Model Trials\\"+name+".keras", custom_objects=None, compile=False, safe_mode=True)
-map_against_storm("Blanche_2", model, normalizer, segments, 4)
+map_against_storm("Caroline_3", model, normalizer, segments, features)
 
