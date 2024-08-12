@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
+import tensorflow as tf
 
 def read_data_np(segment_length):
-    df = pd.read_csv('./data_processing/segmented_data_' + str(segment_length) + 's.csv', header=None, skiprows = 1)
+    df = pd.read_csv('./data_processing/segmented_data_' + str(segment_length) + 's_cat.csv', header=None, skiprows = 1)
     data = []
 
     for i in range(len(df)):
@@ -30,7 +31,11 @@ class DataNormalizer:
             for i in range(self._segment_length+1):
                 points.append(segment[i*self._features:(i+1)*self._features])
         points = np.array(points)
-        return np.tile(points.ptp(0), self._segment_length+1), np.tile(points.min(0), self._segment_length+1)
+        ptp = points.ptp(0)
+        for i in range(len(ptp)):
+            if ptp[i] == 0:
+                ptp[i] = 1
+        return np.tile(ptp, self._segment_length+1), np.tile(points.min(0), self._segment_length+1)
     
     def normalize(self, data):
         return (data - self._min) / self._ptp
@@ -41,13 +46,13 @@ class DataNormalizer:
 
     def unnormalize_output(self, output, value = -1):
         if value == -1:
-            return output * self._ptp[1:self._features] + self._min[1:self._features]
+            return output * self._ptp[1:4] + self._min[1:4]
         return output[value] * self._ptp[value + 1] + self._min[value + 1]
     
 # data = read_data_np(3)
 # print(data[0:0 + 2, :])
 
-# normalizer = DataNormalizer(data, 3, 4)
+# normalizer = DataNormalizer(data, 3, 8)
 # normed_data = normalizer.normalize(data)
 # print(normed_data[:2])
 # print(normalizer.unnormalize(normed_data[:2]))
@@ -66,7 +71,7 @@ def split_data(data, segment_length, features):
         for point in range(segment_length):
             points.append(get_point(point, segment, features))
         input.append(points) # Input sequences of length segment_length with 4 features each
-        labels.append(get_point(segment_length, segment, features)[1:]) # ignore time, just lat/long/wind
+        labels.append(get_point(segment_length, segment, features)[1:4]) # ignore time and region, just lat/long/wind
 
     # Convert to numpy arrays
     return np.array(input), np.array(labels)
