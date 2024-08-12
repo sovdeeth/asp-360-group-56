@@ -93,17 +93,27 @@ def train(model, train, valid, batch_size=32, epochs=50, iteration = 0):
     plt.savefig('./output/Model Trials/Deviation_Curve-Model_{}_S{}_(B{}-E{})'.format(iteration, segments, batch_size, epochs))
     plt.show()
 
+def model_eval(model,test,iteration, batch_size, epochs):
+    test_eval = model.evaluate(test[0], test[1])
+    f = open("test_eval.txt", "a")
+    f.write("Iteration {} (S{}, B{}, E{}): ".format(str(iteration), str(segments), str(batch_size), str(epochs)) + str(test_eval) + "\n")
+    f.close()
+
+    #open and read the file after the appending:
+    f = open("test_eval.txt", "r")
+    print(f.read())
 
 
+iteration = 1 
 
-iteration = 3
-
-segments = 3
+segments = 2
 features = 8
 
-epochs = 32
-batch_size = 32
+epochs = 25 # change this
+batch_size = 128 
 
-train_set, valid_set, test_set, normalizer = get_data(segments, features)
-model = create_model(segments, features)
-train(model, train_set, valid_set, batch_size, epochs, iteration)
+if __name__ == "__main__":
+    train_set, valid_set, test_set, normalizer = get_data(segments, features)
+    model = create_model(segments, features)
+    train(model, train_set, valid_set, batch_size, epochs)
+    model_eval(model, test_set, iteration, batch_size, epochs)
