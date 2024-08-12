@@ -1,0 +1,42 @@
+"","name","year","month","day","hour","lat","long","status","category","wind","pressure","tropicalstorm_force_diameter","hurricane_force_diameter"
+"1","Debby",2024,8,2,18,21.1,-77.5,"potential tropical cyclone",NA,30,1012,NA,NA
+"2","Debby",2024,8,3,0,21.4,-78.9,"potential tropical cyclone",NA,30,1010,NA,NA
+"3","Debby",2024,8,3,6,21.6,-80.1,"tropical depression",NA,30,1010,NA,NA
+"4","Debby",2024,8,3,12,22.2,-81.5,"tropical depression",NA,30,1009,NA,NA
+"5","Debby",2024,8,3,18,23.1,-82.6,"tropical depression",NA,35,1009,NA,NA
+"6","Debby",2024,8,4,0,24.1,-83.3,"tropical storm",NA,40,1005,NA,NA
+"7","Debby",2024,8,4,6,24.9,-83.9,"tropical storm",NA,45,1003,NA,NA
+"8","Debby",2024,8,4,12,26.3,-84.2,"tropical storm",NA,60,1001,NA,NA
+"9","Debby",2024,8,4,18,27.3,-84.4,"tropical storm",NA,65,992,NA,NA
+"10","Debby",2024,8,5,0,28.1,-84.1,"tropical storm",NA,70,992,NA,NA
+"11","Debby",2024,8,5,6,29.1,-83.8,"hurricane",1,80,981,NA,NA
+"12","Debby",2024,8,5,12,29.9,-83.4,"hurricane",1,75,979,NA,NA
+"13","Debby",2024,8,5,18,30.4,-83.1,"tropical storm",NA,65,990,NA,NA
+"14","Debby",2024,8,6,0,30.7,-82.4,"tropical storm",NA,45,996,NA,NA
+"15","Debby",2024,8,6,6,31.2,-81.9,"tropical storm",NA,45,998,NA,NA
+"16","Debby",2024,8,6,12,31.9,-81.3,"tropical storm",NA,45,999,NA,NA
+"17","Debby",2024,8,6,18,32,-80.9,"tropical storm",NA,40,999,NA,NA
+"18","Debby",2024,8,7,0,31.8,-80.6,"tropical storm",NA,40,997,NA,NA
+"19","Debby",2024,8,7,6,31.8,-79.8,"tropical storm",NA,45,996,NA,NA
+"20","Debby",2024,8,7,12,32.2,-79.4,"tropical storm",NA,45,995,NA,NA
+"21","Debby",2024,8,7,18,32.4,-79.1,"tropical storm",NA,60,995,NA,NA
+"22","Debby",2024,8,8,0,32.7,-79.4,"tropical storm",NA,60,994,NA,NA
+"23","Debby",2024,8,8,6,33,-79.6,"tropical storm",NA,50,995,NA,NA
+"24","Debby",2024,8,8,12,34.1,-79.9,"tropical storm",NA,45,995,NA,NA
+"25","Debby",2024,8,8,18,34.8,-80.2,"tropical storm",NA,40,997,NA,NA
+"26","Debby",2024,8,9,0,36.2,-80.2,"tropical depression",NA,30,1001,NA,NA
+"27","Alberto",2024,6,17,15,20.3,-93.2,"potential tropical cyclone",NA,40,1001,NA,NA
+"28","Alberto",2024,6,18,3,21.0,-93.0,"potential tropical cyclone",NA,40,999,NA,NA
+"29","Alberto",2024,6,18,9,21.8,-92.7,"potential tropical cyclone",NA,40,999,NA,NA
+"30","Alberto",2024,6,18,15,22.1,-92.7,"potential tropical cyclone",NA,40,999,NA,NA
+"31","Alberto",2024,6,19,3,22.7,-93.8,"potential tropical cyclone",NA,40,998,NA,NA
+"32","Alberto",2024,6,19,9,22.7,-94.3,"potential tropical cyclone",NA,40,997,NA,NA
+"33","Alberto",2024,6,19,15,22.2,-95.1,"tropical storm",NA,40,995,NA,NA
+"34","Alberto",2024,6,19,21,21.5,-95.9,"tropical storm",NA,52,993,NA,NA
+"35","Alberto",2024,6,20,3,22.3,-97.3,"tropical storm",NA,52,993,NA,NA
+"36","Alberto",2024,6,20,9,22.3,-98.3,"tropical storm",NA,46,997,NA,NA
+"37","Alberto",2024,6,20,15,22.3,-102.0,"remnants of",NA,29,1000,NA,NA
+"38","Five",2024,8,11,21,13.6,-48,"potential tropical cyclone",NA,30,1010,NA,NA
+"39","Five",2024,8,12,0,13.9,-49.1,"potential tropical cyclone",NA,30,1009,NA,NA
+"40","Five",2024,8,12,6,14.3,-51.4,"potential tropical cyclone",NA,30,1009,NA,NA
+"41","Five",2024,8,12,12,14.6,-54.3,"potential tropical cyclone",NA,30,1009,NA,NA
