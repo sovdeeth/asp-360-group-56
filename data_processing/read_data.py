@@ -102,7 +102,7 @@ def categorize_location(lat, long):
     if float(lat) > 20: 
         bucket |= 2
     
-    if float(long) > 70:
+    if float(long) < -70:
         bucket |= 1
     
     return bucket
