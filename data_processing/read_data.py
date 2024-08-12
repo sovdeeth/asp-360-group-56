@@ -31,7 +31,7 @@ def categorize_location(lat, long):
     if float(lat) > 20: 
         bucket |= 2
     
-    if float(long) > 70:
+    if float(long) < -70:
         bucket |= 1
     
     return one_hots[bucket]
@@ -91,4 +91,3 @@ def segment_storm_data(input_length = 2):
 read_storm_data()
 for i in range(2, 11):
     segment_storm_data(i)
-
