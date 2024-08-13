@@ -1,6 +1,7 @@
 import csv
 import datetime
 import numpy as np
+from stochastic_model import Grid
 
 def dateFromMDH(month, day, hour):
     return (datetime.datetime(2001, int(month), int(day), 0).timetuple().tm_yday - 1) * 24 + int(hour)
@@ -42,28 +43,33 @@ def flatten(xss):
 # turn list of points into segments, keep name for id purposes
 # calculate starting quadrant
 def segment_storm_data(input_length = 2):
+    grid = Grid()
     points_by_storm = {}
     current_storm = ""
     id = 0
     with open("./data_processing/test_stripped_storms.csv") as input:
         csv_reader = csv.reader(input, delimiter=',')
-        header = True
         for row in csv_reader:
-            if header is True:
-                header = False
-                continue
             if len(row) == 0:
                 continue
             # new storm!
+            # print(row[0], current_storm)
             if row[0] != current_storm:
                 id += 1
                 current_storm = row[0]
                 storm_category = categorize_location(row[2], row[3])
+                velo = [0,0]
+            else:
+                velo = [float(row[2]) - prev_lat, float(row[3]) - prev_long]
+            prev_lat = float(row[2])
+            prev_long = float(row[3])
+
             point = points_by_storm.setdefault(row[0] + "_" + str(id), [])
             row = row[1:]
             row.extend(storm_category)
+            row.extend(velo)
             point.append(row)
-    
+
     # split into segments
     segments = []
     for storm, storm_points in points_by_storm.items():
@@ -79,9 +85,9 @@ def segment_storm_data(input_length = 2):
 
     columns = ["name"]
     for i in range(input_length):
-        columns.extend([(x + "_" + str(i)) for x in ["hour_of_year","lat","long","wind","region0","region1","region2","region3"]])
+        columns.extend([(x + "_" + str(i)) for x in ["hour_of_year","lat","long","wind","region0","region1","region2","region3","delta_lat", "delta_long"]])
 
-    with open("./data_processing/test_segmented_data_" + str(input_length) +"s_cat.csv", "w", newline='') as output:
+    with open("./data_processing/segmented_data_" + str(input_length) +"s_cat_velo.csv", "w", newline='') as output:
         storm_writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         storm_writer.writerow(columns)
         for point in segments:

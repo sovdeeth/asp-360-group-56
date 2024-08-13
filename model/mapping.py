@@ -9,7 +9,7 @@ from PIL import Image
 
 def get_data_by_storm(storm, input_length = 2):
     points = []
-    with open("./data_processing/segmented_data_" + str(input_length) + "s_cat.csv") as input:
+    with open("./data_processing/segmented_data_" + str(input_length) + "s_cat_velo.csv") as input:
         csv_reader = csv.reader(input, delimiter=',')
         header = True
         for row in csv_reader:
@@ -71,7 +71,13 @@ def map_against_storm(storm, model, normalizer, segments, features):
         pred_coordinates['windspeed'].append(windspeed)
 
         # shift input
-        input = np.concatenate((input[1:], [[norm_truth_labels[i][0], output[0][0], output[0][1], output[0][2], input[0][4],input[0][5],input[0][6],input[0][7]]]))
+        new_point = [norm_truth_labels[i][0]]
+        new_point.extend(output[0])
+        new_point.extend(input[0][4:8])
+        new_point.extend(normalizer.normalize_delta(lat - pred_coordinates['lat'][-2], long - pred_coordinates['long'][-2]))
+        input = np.concatenate((input[1:], [new_point]))
+
+        # print("Guess: ({}, {}) vs Truth ({}, {})".format(lat, long, truth_labels[i][0], truth_labels[i][1]))
     
     df = pd.DataFrame(pred_coordinates)
     df2 = pd.DataFrame(true_coordinates)
@@ -134,26 +140,17 @@ def map_against_storm(storm, model, normalizer, segments, features):
 
     # Display the map
     eq_map.save("./output/Model Trials/Predictions_Map_"+name+"_Storm_"+storm+".html")
-    eq_map.show_in_browser()
-    
-features = 8
+
+
+segments = 3
+features = 10
+
 data = read_data_np(segments)
 normalizer = DataNormalizer(data, segments, features)
-name = "(Cat) Model_{}_S{}_(B{}-E{})".format(iteration, segments, batch_size, epochs)
-# name = "Model_0_S5_(B16-E50)"
+name = "Model_4_S3_(B32-E64)"
 model = keras.saving.load_model("output\Model Trials\\"+name+".keras", custom_objects=None, compile=False, safe_mode=True)
-map_against_storm("Debby_1", model, normalizer, segments, features)
-
-#     eq_map
-#     eq_map.save("./output/Model Trials/Predictions_Map_"+name+"_Storm_"+storm+".html")
-
-
-# segments = 3
-# features = 8
-
-# data = read_data_np(segments)
-# normalizer = DataNormalizer(data, segments, features)
-# name = "Model_3_S3_(B32-E32)"
-# model = keras.saving.load_model("output\Model Trials\\"+name+".keras", custom_objects=None, compile=False, safe_mode=True)
-# map_against_storm("Caroline_3", model, normalizer, segments, features)
+map_against_storm("Amy_1", model, normalizer, segments, features)
+map_against_storm("Blanche_2", model, normalizer, segments, features)
+map_against_storm("Caroline_3", model, normalizer, segments, features)
+map_against_storm("Alberto_467", model, normalizer, segments, features)
 

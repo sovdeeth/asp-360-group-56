@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 import tensorflow as tf
 from keras import Sequential
 from keras import layers
+import keras
 import matplotlib.pyplot as plt
 
 
@@ -68,8 +69,15 @@ def create_model(segment_length, input_features, output_features = 3):
 
 def train(iteration, model, train, valid, batch_size=32, epochs=50):
     global segments
-    history = model.fit(train[0], train[1], batch_size, epochs, validation_data=(valid[0], valid[1]))
-    model.save('./output/Model Trials/(Cat) Model_{}_S{}_(B{}-E{}).keras'.format(iteration, segments, batch_size, epochs))
+    checkpoint_filepath = './output/checkpoints/Model_{}_S{}_(B{}-E{}).keras'.format(iteration, segments, batch_size, "{epoch:02d}")
+    model_checkpoint_callback = keras.callbacks.ModelCheckpoint(
+        filepath=checkpoint_filepath,
+        monitor='val_long_deviation',
+        mode='min',
+        save_best_only=True)
+
+    history = model.fit(train[0], train[1], batch_size, epochs, validation_data=(valid[0], valid[1]), callbacks=model_checkpoint_callback)
+    model.save('./output/Model Trials/Model_{}_S{}_(B{}-E{}).keras'.format(iteration, segments, batch_size, epochs))
 
     plt.plot(history.history['loss'][2:])
     plt.plot(history.history['val_loss'][2:])
@@ -106,11 +114,14 @@ def model_eval(model,test,iteration, batch_size, epochs):
 
 iteration = 1 
 
-segments = 2
-features = 8
 
-epochs = 50 # change this
-batch_size = 128 
+iteration = 4
+
+segments = 3
+features = 10
+
+epochs = 64
+batch_size = 32
 
 if __name__ == "__main__":
     train_set, valid_set, test_set, normalizer = get_data(segments, features)
