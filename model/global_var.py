@@ -1,0 +1,2 @@
+global normalizer
+normalizer = None

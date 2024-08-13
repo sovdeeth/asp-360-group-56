@@ -87,7 +87,7 @@ def segment_storm_data(input_length = 2):
     for i in range(input_length):
         columns.extend([(x + "_" + str(i)) for x in ["hour_of_year","lat","long","wind","region0","region1","region2","region3","delta_lat", "delta_long"]])
 
-    with open("./data_processing/segmented_data_" + str(input_length) +"s_cat_velo.csv", "w", newline='') as output:
+    with open("./data_processing/test_segmented_data_" + str(input_length) +"s_cat_velo.csv", "w", newline='') as output:
         storm_writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         storm_writer.writerow(columns)
         for point in segments:
