@@ -140,17 +140,26 @@ def map_against_storm(storm, model, normalizer, segments, features):
 
     # Display the map
     eq_map.save("./output/Model Trials/Predictions_Map_"+name+"_Storm_"+storm+".html")
-
-
-segments = 3
-features = 10
+    eq_map.show_in_browser()
+    
 
 data = read_data_np(segments)
 normalizer = DataNormalizer(data, segments, features)
-name = "Model_4_S3_(B32-E64)"
+name = "(Cat) Model_{}_S{}_(B{}-E{})".format(iteration, segments, batch_size, epochs)
+name = "(Cat) Model_1_S2_(B64-E100)"
 model = keras.saving.load_model("output\Model Trials\\"+name+".keras", custom_objects=None, compile=False, safe_mode=True)
-map_against_storm("Amy_1", model, normalizer, segments, features)
-map_against_storm("Blanche_2", model, normalizer, segments, features)
-map_against_storm("Caroline_3", model, normalizer, segments, features)
-map_against_storm("Alberto_467", model, normalizer, segments, features)
+map_against_storm("Ernesto_3", model, normalizer, segments, features)
+
+#     eq_map
+#     eq_map.save("./output/Model Trials/Predictions_Map_"+name+"_Storm_"+storm+".html")
+
+
+# segments = 3
+# features = 8
+
+# data = read_data_np(segments)
+# normalizer = DataNormalizer(data, segments, features)
+# name = "Model_3_S3_(B32-E32)"
+# model = keras.saving.load_model("output\Model Trials\\"+name+".keras", custom_objects=None, compile=False, safe_mode=True)
+# map_against_storm("Caroline_3", model, normalizer, segments, features)
 

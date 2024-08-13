@@ -112,13 +112,13 @@ def model_eval(model,test,iteration, batch_size, epochs):
     print(f.read())
 
 
-iteration = 4
+iteration = 1
 
-segments = 3
+segments = 6
 features = 10
 
-epochs = 75
-batch_size = 32
+epochs = 50 # change this
+batch_size = 128 
 
 if __name__ == "__main__":
     train_set, valid_set, test_set, normalizer = get_data(segments, features)
