@@ -173,7 +173,7 @@ def get_true_coord(steps, storm, segments):
         true_coordinates['long'].append(point[0][2])
         true_coordinates['windspeed'].append(point[0][3])
     if steps > len(truth_inputs):
-        return input, pd.DataFrame(true_coordinates)
+        return truth_inputs, input, pd.DataFrame(true_coordinates)
     else:
         true_coordinates['lat'] = true_coordinates['lat'][:steps]
         true_coordinates['long'] = true_coordinates['long'][:steps]
@@ -304,12 +304,12 @@ def ensemble_pred(num_iteration, storm, segments, features, batch_size, epochs, 
         # loop plot_on_map for each model
         # calculate deviation for each model then average them
 
-iterations = 5
+iterations = 2
 storm = "Debby_1"
-segments = 2
+segments = 4
 features = 10
 batch_size = 64
-epochs = 52
-steps = len(get_data_by_storm(storm, segments))
+epochs = 4
+steps = 40
 
 ensemble_pred(iterations, storm, segments, features, batch_size, epochs, steps)

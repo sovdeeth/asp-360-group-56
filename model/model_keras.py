@@ -120,7 +120,7 @@ def model_eval(model,test,iteration, batch_size, epochs):
 
 iteration = 1
 
-segments = 2
+segments = 4
 features = 10
 
 epochs = 100 # change this
