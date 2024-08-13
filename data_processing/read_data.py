@@ -8,7 +8,7 @@ def dateFromMDH(month, day, hour):
 # read file into list of points, omit status, category, diameter, etc.
 def read_storm_data():
     stripped_data = []
-    with open("./data_processing/storms.csv") as input:
+    with open("./data_processing/test_storms.csv") as input:
         skipped_first = False
         csv_reader = csv.reader(input, delimiter=',')
         for row in csv_reader:
@@ -18,7 +18,7 @@ def read_storm_data():
             data_point = [row[1], dateFromMDH(row[3], row[4], row[5]), row[6], row[7], row[10]]
             stripped_data.append(data_point)
     
-    with open("./data_processing/stripped_storms.csv", "w", newline='') as output:
+    with open("./data_processing/test_stripped_storms.csv", "w", newline='') as output:
         storm_writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for point in stripped_data:
             storm_writer.writerow(point)
@@ -45,7 +45,7 @@ def segment_storm_data(input_length = 2):
     points_by_storm = {}
     current_storm = ""
     id = 0
-    with open("./data_processing/stripped_storms.csv") as input:
+    with open("./data_processing/test_stripped_storms.csv") as input:
         csv_reader = csv.reader(input, delimiter=',')
         header = True
         for row in csv_reader:
@@ -81,7 +81,7 @@ def segment_storm_data(input_length = 2):
     for i in range(input_length):
         columns.extend([(x + "_" + str(i)) for x in ["hour_of_year","lat","long","wind","region0","region1","region2","region3"]])
 
-    with open("./data_processing/segmented_data_" + str(input_length) +"s_cat.csv", "w", newline='') as output:
+    with open("./data_processing/test_segmented_data_" + str(input_length) +"s_cat.csv", "w", newline='') as output:
         storm_writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         storm_writer.writerow(columns)
         for point in segments:

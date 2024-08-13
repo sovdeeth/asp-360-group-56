@@ -1,6 +1,7 @@
 import csv
 import keras
 from format_data import *
+from model_keras import *
 import folium
 from folium import plugins
 from PIL import Image
@@ -132,16 +133,27 @@ def map_against_storm(storm, model, normalizer, segments, features):
                 icon=folium.Icon(color='green', icon=None)).add_to(eq_map)
 
     # Display the map
-    eq_map
     eq_map.save("./output/Model Trials/Predictions_Map_"+name+"_Storm_"+storm+".html")
-
-
-segments = 3
+    eq_map.show_in_browser()
+    
 features = 8
-
 data = read_data_np(segments)
 normalizer = DataNormalizer(data, segments, features)
-name = "Model_3_S3_(B32-E32)"
+name = "(Cat) Model_{}_S{}_(B{}-E{})".format(iteration, segments, batch_size, epochs)
+# name = "Model_0_S5_(B16-E50)"
 model = keras.saving.load_model("output\Model Trials\\"+name+".keras", custom_objects=None, compile=False, safe_mode=True)
-map_against_storm("Caroline_3", model, normalizer, segments, features)
+map_against_storm("Debby_1", model, normalizer, segments, features)
+
+#     eq_map
+#     eq_map.save("./output/Model Trials/Predictions_Map_"+name+"_Storm_"+storm+".html")
+
+
+# segments = 3
+# features = 8
+
+# data = read_data_np(segments)
+# normalizer = DataNormalizer(data, segments, features)
+# name = "Model_3_S3_(B32-E32)"
+# model = keras.saving.load_model("output\Model Trials\\"+name+".keras", custom_objects=None, compile=False, safe_mode=True)
+# map_against_storm("Caroline_3", model, normalizer, segments, features)
 
