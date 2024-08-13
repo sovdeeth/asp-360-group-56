@@ -112,15 +112,12 @@ def model_eval(model,test,iteration, batch_size, epochs):
     print(f.read())
 
 
-iteration = 1 
-
-
 iteration = 4
 
 segments = 3
 features = 10
 
-epochs = 64
+epochs = 75
 batch_size = 32
 
 if __name__ == "__main__":

@@ -74,7 +74,7 @@ def split_data(data, segment_length, features):
             points.append(get_point(point, segment, features))
         input.append(points) # Input sequences of length segment_length with 4 features each
         p = get_point(segment_length, segment, features)
-        labels.append(np.concatenate((p[1:4], p[8:10]))) # ignore time and region, just lat/long/wind
+        labels.append(p[1:4]) # ignore time and region, just lat/long/wind
 
     # Convert to numpy arrays
     return np.array(input), np.array(labels)
