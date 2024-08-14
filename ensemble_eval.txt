@@ -1,0 +1,24 @@
+(S4, B64, E4): Average Distance: 966.1816888231228 MSE: 125.18604245182264
+(S6, B64, E4): Average Distance: 965.1775166461293km	MSE: 101.40145007840573km
+(S8, B64, E5): Average Distance: 762.5324668405596km    MSE: 86.96632940653053km(S10, B64, E5): Average Distance: 71.76km	MSE: 0.78km
+(S10, B64, E5): Average Distance: 515.24km	MSE: 35.48
+(S10, B64, E5): Average Distance: 38.91km	MSE: 0.25
+(S10, B64, E5): Average Distance: 399.22km	MSE: 21.98
+(S10, B64, E5): Average Distance: 51.13km	MSE: 0.45
+(S10, B64, E2): Average Distance: 281.05km	MSE: 11.4
+(S10, B64, E2): Average Distance: 445.97km	MSE: 21.71
+(S10, B64, E2): Average Distance: 193.06km	MSE: 5.61
+(S10, B64, E2): Average Distance: 392.54km	MSE: 16.36
+(S10, B64, E2): Average Distance: 307.81km	MSE: 8.78
+(S10, B64, E2): Average Distance: 140.55km	MSE: 2.79
+(S10, B64, E2): Average Distance: 584.93km	MSE: 32.23
+(S10, B64, E2): Average Distance: 787.01km	MSE: 58.18
+(S10, B64, E2): Average Distance: 215.0km	MSE: 3.86
+(S10, B64, E10): Average Distance: 1147.11km	MSE: 125.47
+(S10, B64, E6): Average Distance: 621.79km	MSE: 31.03
+(S10, B64, E5): Average Distance: 671.85km	MSE: 52.04
+(S5, B128, E50): Average Distance: 567.64km	MSE: 21.27
+(S10, B128, E5): Average Distance: 3057.63km	MSE: 1647009854212.5
+(S10, B128, E50): Average Distance: 3555.74km	MSE: 889076370694.51
+(S3, B128, E50): Average Distance: 6508.84km	MSE: 3.741933306854513e+17
+(S4, B128, E5): Average Distance: 499.08km	MSE: 19.71
