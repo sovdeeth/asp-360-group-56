@@ -70,7 +70,7 @@ def split_data(data, segment_length, features):
     # Create sequences of 2 time steps
     for segment in data:
         points = []
-        for point in range(segment_length):
+        for point in range(segment_length+1):
             points.append(get_point(point, segment, features))
         input.append(points) # Input sequences of length segment_length with 4 features each
         p = get_point(segment_length, segment, features)
