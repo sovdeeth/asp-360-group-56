@@ -6,7 +6,8 @@ import global_var
 import folium
 from folium import plugins
 from PIL import Image
-
+import random
+import webbrowser
 
 def get_data_by_storm(storm, input_length = 2):
     points = []
@@ -143,18 +144,6 @@ def map_against_storm(name, storm, model, normalizer, segments, features):
     eq_map.show_in_browser()
 
 
-# data = read_data_np(segments)
-# normalizer = DataNormalizer(data, segments, features)
-# name = "(Vel) Model_{}_S{}_(B{}-E{})".format(iteration, segments, batch_size, epochs)
-# name = "(Vel) Model_1_S2_(B64-E61)"
-# model = keras.saving.load_model("output\checkpoints\\"+name+".keras", custom_objects=None, compile=False, safe_mode=True)
-# map_against_storm(name, "Debby_1", model, normalizer, segments, features)
-
-#     eq_map
-#     eq_map.save("./output/Model Trials/Predictions_Map_"+name+"_Storm_"+storm+".html")
-
-
-
 # function that takes in steps then generates the true coordinates and inputs, if steps < len(true), then crop true
 def get_true_coord(steps, storm, segments):
     truth = get_data_by_storm(storm, segments)
@@ -214,19 +203,11 @@ def get_pred_coord(steps, model, input, truth_inputs):
 
     return pd.DataFrame(pred_coordinates)
 
-# data = read_data_np(segments)
-# global_var.normalizer = DataNormalizer(data, segments, features)
-# name = "(Vel) Model_{}_S{}_(B{}-E{})".format(iteration, segments, batch_size, epochs)
-# name = "(Vel) Model_1_S2_(B64-E61)"
-# model = keras.saving.load_model("output\checkpoints\\"+name+".keras", custom_objects=None, compile=False, safe_mode=True)
-# steps = 5
-# true_inputs, input, true_coordinates = get_true_coord(steps, storm, segments)
-# pred_coordinates = get_pred_coord(steps, model, input, true_inputs)
-# print(pred_coordinates)
 
 # function that gets true coordinates, predicted coordinates, map, and plot the data on the map ()
 def plot_on_map(df, df2, eq_map):
     for i in range(len(df) - 1):
+        print(i)
         p1 = df.iloc[i][['lat', 'long']].tolist()
         p2 = df.iloc[i + 1][['lat', 'long']].tolist()
 
@@ -249,6 +230,7 @@ def plot_on_map(df, df2, eq_map):
 
     # Add lines connecting consecutive points for the second set of coordinates
     for i in range(len(df2) - 1):
+        print(i)
         p1 = df2.iloc[i][['lat', 'long']].tolist()
         p2 = df2.iloc[i + 1][['lat', 'long']].tolist()
 
@@ -318,7 +300,7 @@ def mse_of_pred(predCoor, realCoor, row_limit=None):
 
     return mse
 
-def ensemble_pred(num_iteration, storm, segments, features, batch_size, epochs, steps):
+def ensemble_pred(num_iteration, name, storm, segments, features, steps):
     # Initiate training data
     train_set, valid_set, test_set, global_var.normalizer = get_data(segments, features)
 
@@ -338,11 +320,16 @@ def ensemble_pred(num_iteration, storm, segments, features, batch_size, epochs, 
     # iterate multiple times
     for i in range(num_iteration):
         print("Iteration: ", i)
-        model = create_model(segments, features)
-        train(i, model, train_set, valid_set, batch_size, epochs)
+        # model = create_model(segments, features)
+        # train(i, model, train_set, valid_set, batch_size, epochs)
 
-        name = "(Ensemble Pred) Model_{}_S{}_(B{}-E{})".format(i, segments, batch_size, epochs)
-        model = keras.saving.load_model("output\Ensemble Preds\\"+name+".keras", custom_objects=None, compile=False, safe_mode=True)
+        # name = "(Ensemble Pred) Model_{}_S{}_(B{}-E{})".format(i, segments, batch_size, epochs)
+        # model = keras.saving.load_model("output\Ensemble Preds\\"+name+".keras", custom_objects=None, compile=False, safe_mode=True)
+
+        model = keras.saving.load_model("output\checkpoints\\"+name, compile = False) # change this
+        
+        for i in range(len(input[-2])):
+            input[-2][i] += (random.random() - 0.5) * 0.05
 
         # get predicted coordinates        
         pred_coordinates = get_pred_coord(steps, model, input, true_inputs)
@@ -359,26 +346,59 @@ def ensemble_pred(num_iteration, storm, segments, features, batch_size, epochs, 
         mse_list.append(mse)
 
     # Save and display map
-    eq_map.save("./output/Ensemble Preds/(Ensemble Pred) Predictions_Map_"+name+"_Storm_"+storm+".html")
-    eq_map.show_in_browser()
+    eq_map.save(name+"_Storm_"+storm+".html")
+
+    webbrowser.open(name+"_Storm_"+storm+".html")
 
     # Calculate average distance and mse
     avg_dist = np.mean(avg_dist_list)
     mse = np.mean(mse_list)
 
     f = open("ensemble_eval.txt", "a")
-    f.write("(S{}, B{}, E{}): ".format(str(segments), str(batch_size), str(epochs)) + "Average Distance: " + str(round(avg_dist,2)) + "km\t" + "MSE: " + str(round(mse,2)) + "\n")
+    f.write(name[22:37] + "Average Distance: " + str(round(avg_dist,2)) + "km\t" + "MSE: " + str(round(mse,2)) + "\n")
     f.close()
 
     f = open("ensemble_eval.txt", "r")
     print(f.read())
 
-iterations = 4
-storm = "Debby_1"
-global_var.segments = 4
-features = 10
-batch_size = 128
-epochs = 5
-steps = len(get_data_by_storm(storm, global_var.segments)) + global_var.segments
+import os
+def whole_batchsize_ensemble(num_iteration, model_iteration, storm, segments, features, batch_size, steps):
+    for filename in os.listdir('output/checkpoints'):
+        if filename.startswith("(Ensemble Pred) Model_{}_S{}_(B{}".format(model_iteration,segments,batch_size)):
+            if filename.endswith(".keras"):
+                ensemble_pred(num_iteration, filename, storm, segments, features, steps)
 
-ensemble_pred(iterations, storm, global_var.segments, features, batch_size, epochs, steps)
+
+whole_ensemble = True
+
+if whole_ensemble:
+    model_iteration = 2
+    iterations = 5
+    storm = "Debby_1"
+    global_var.segments = 4
+    features = 10
+    batch_size = 32
+    steps = len(get_data_by_storm(storm, global_var.segments)) + global_var.segments
+
+    whole_batchsize_ensemble(iterations, model_iteration, storm, global_var.segments, features, batch_size, steps)
+
+
+is_ensemble_pred = True
+if is_ensemble_pred and not whole_ensemble:
+    iterations = 2
+    filename = "(Ensemble Pred) Model_2_S4_(B64-E70).keras"
+    storm = "Debby_1"
+    global_var.segments = 4
+    features = 10
+    steps = len(get_data_by_storm(storm, global_var.segments)) + global_var.segments
+    ensemble_pred(iterations, filename, storm, global_var.segments, features, steps)
+elif not (is_ensemble_pred) and not(whole_ensemble):
+    data = read_data_np(global_var.segments)
+    normalizer = DataNormalizer(data, global_var.segments, features)
+    name = "(Ensemble Pred) Model_2_S4_(B128-E71)"
+    model = keras.saving.load_model("output\checkpoints\\"+name+".keras", custom_objects=None, compile=False, safe_mode=True)
+    map_against_storm(name, "Debby_1", model, normalizer, global_var.segments, features)
+
+
+
+# implement multi storm ensemble pred

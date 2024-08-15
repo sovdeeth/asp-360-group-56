@@ -69,18 +69,14 @@ def create_model(segment_length, input_features, output_features = 3):
     return model
 
 def train(iteration, model, train, valid, batch_size=32, epochs=50):
-    if __name__ == "__main__":
-        checkpoint_filepath = './output/checkpoints/(Vel) Model_{}_S{}_(B{}-E{}).keras'.format(iteration, global_var.segments, batch_size, "{epoch:02d}")
-        model_checkpoint_callback = keras.callbacks.ModelCheckpoint(
-            filepath=checkpoint_filepath,
-            monitor='val_long_deviation',
-            mode='min',
-            save_best_only=True)
-        history = model.fit(train[0], train[1], batch_size, epochs, validation_data=(valid[0], valid[1]), callbacks=model_checkpoint_callback)
-        model.save('./output/Model Trials/(Vel) Model_{}_S{}_(B{}-E{}).keras'.format(iteration, global_var.segments, batch_size, epochs))
-    else:
-        history = model.fit(train[0], train[1], batch_size, epochs, validation_data=(valid[0], valid[1]))
-        model.save('./output/Ensemble Preds/(Ensemble Pred) Model_{}_S{}_(B{}-E{}).keras'.format(iteration, global_var.segments, batch_size, epochs))
+    checkpoint_filepath = './output/checkpoints/(Ensemble Pred) Model_{}_S{}_(B{}-E{}).keras'.format(iteration, global_var.segments, batch_size, "{epoch:02d}")
+    model_checkpoint_callback = keras.callbacks.ModelCheckpoint(
+        filepath=checkpoint_filepath,
+        monitor='val_long_deviation',
+        mode='min',
+        save_best_only=True)
+    history = model.fit(train[0], train[1], batch_size, epochs, validation_data=(valid[0], valid[1]), callbacks=model_checkpoint_callback)
+    model.save('./output/Model Trials/(Ensemble Pred) Model_{}_S{}_(B{}-E{}).keras'.format(iteration, global_var.segments, batch_size, epochs))
     
     if __name__ == "__main__":
         plt.plot(history.history['loss'][2:])
@@ -89,7 +85,7 @@ def train(iteration, model, train, valid, batch_size=32, epochs=50):
         plt.ylabel('mse')
         plt.xlabel('epoch')
         plt.legend(['train', 'val'], loc='upper left')
-        plt.savefig('./output/Model Trials/(Vel) Training_Curve-Model_{}_S{}_(B{}-E{})'.format(iteration, global_var.segments, batch_size, epochs))
+        plt.savefig('./output/Ensemble Preds/(Ensemble Pred) Training_Curve-Model_{}_S{}_(B{}-E{})'.format(iteration, global_var.segments, batch_size, epochs))
         plt.show()
 
         plt.plot(history.history['lat_deviation'])
@@ -102,14 +98,13 @@ def train(iteration, model, train, valid, batch_size=32, epochs=50):
         plt.ylabel('deviation (degrees)')
         plt.xlabel('epoch')
         plt.legend(['train_lat', 'train_long', 'train_wind', 'val_lat', 'val_long', 'val_wind'], loc='upper left')
-        plt.savefig('./output/Model Trials/(Vel) Deviation_Curve-Model_{}_S{}_(B{}-E{})'.format(iteration, global_var.segments, batch_size, epochs))
-        plt.savefig('./output/Model Trials/(Ensemble Pred) Deviation_Curve-Model_{}_S{}_(B{}-E{})'.format(iteration, global_var.segments, batch_size, epochs))
+        plt.savefig('./output/Ensemble Preds/(Ensemble Pred) Deviation_Curve-Model_{}_S{}_(B{}-E{})'.format(iteration, global_var.segments, batch_size, epochs))
         plt.show()
 
 def model_eval(model,test,iteration, batch_size, epochs):
     test_eval = model.evaluate(test[0], test[1])
     f = open("test_eval.txt", "a")
-    f.write("(Vel) Iteration {} (S{}, B{}, E{}): ".format(str(iteration), str(global_var.segments), str(batch_size), str(epochs)) + str(test_eval) + "\n")
+    f.write("(Ensemble Pred) Iteration {} (S{}, B{}, E{}): ".format(str(iteration), str(global_var.segments), str(batch_size), str(epochs)) + str(test_eval) + "\n")
     f.close()
 
     #open and read the file after the appending:
@@ -117,13 +112,13 @@ def model_eval(model,test,iteration, batch_size, epochs):
     print(f.read())
 
 
-iteration = 1
+iteration = 2
 
 global_var.segments = 4
 features = 10
 
-epochs = 50 # change this
-batch_size = 128
+epochs = 150 # change this
+batch_size = 64
 
 if __name__ == "__main__":
     train_set, valid_set, test_set, global_var.normalizer = get_data(global_var.segments, features)

@@ -22,3 +22,58 @@
 (S10, B128, E50): Average Distance: 3555.74km	MSE: 889076370694.51
 (S3, B128, E50): Average Distance: 6508.84km	MSE: 3.741933306854513e+17
 (S4, B128, E5): Average Distance: 499.08km	MSE: 19.71
+(S3, B64, E91): Average Distance: 866.56km	MSE: 47.92
+(S4, B128, E98): Average Distance: 581.36km	MSE: 20.73
+(S4, B128, E5): Average Distance: 384.94km	MSE: 9.67
+(S4, B128, E5): Average Distance: 542.21km	MSE: 24.15
+(S4, B128, E5): Average Distance: 778.4km	MSE: 44.37
+(S4, B128, E20): Average Distance: 0.0km	MSE: 0.0
+(S4, B128, E71): Average Distance: 653.9km	MSE: 26.91
+(S4, B128, E71): Average Distance: 606.35km	MSE: 23.1
+(S4, B128, E61): Average Distance: 642.0km	MSE: 24.79
+(S4, B128, E61): Average Distance: 1066.31km	MSE: 72.28
+(S4, B128, E61): Average Distance: 683.72km	MSE: 29.61
+2_S4_(B128-E01)Average Distance: 1578.08km	MSE: 134.6
+2_S4_(B128-E100) Average Distance: 603.12km	MSE: 22.56
+2_S4_(B128-E14)Average Distance: 901.71km	MSE: 65.79
+2_S4_(B128-E15)Average Distance: 386.47km	MSE: 14.18
+2_S4_(B128-E16)Average Distance: 705.17km	MSE: 34.86
+2_S4_(B128-E18)Average Distance: 791.6km	MSE: 37.67
+2_S4_(B128-E19)Average Distance: 857.05km	MSE: 48.75
+2_S4_(B128-E20)Average Distance: 391.72km	MSE: 12.44
+2_S4_(B128-E21)Average Distance: 465.24km	MSE: 13.47
+2_S4_(B128-E22)Average Distance: 279.17km	MSE: 4.52
+2_S4_(B128-E23)Average Distance: 434.76km	MSE: 12.51
+2_S4_(B128-E26)Average Distance: 467.04km	MSE: 12.77
+2_S4_(B128-E30)Average Distance: 483.45km	MSE: 14.19
+2_S4_(B128-E31)Average Distance: 407.25km	MSE: 9.0
+2_S4_(B128-E33)Average Distance: 279.75km	MSE: 5.27
+2_S4_(B128-E37)Average Distance: 588.01km	MSE: 23.22
+2_S4_(B128-E38)Average Distance: 571.49km	MSE: 19.0
+2_S4_(B128-E39)Average Distance: 634.81km	MSE: 25.56
+2_S4_(B128-E43)Average Distance: 405.62km	MSE: 8.93
+2_S4_(B128-E44)Average Distance: 480.1km	MSE: 15.06
+2_S4_(B128-E50)Average Distance: 670.15km	MSE: 31.7
+2_S4_(B128-E61)Average Distance: 718.89km	MSE: 32.02
+2_S4_(B128-E62)Average Distance: 574.95km	MSE: 21.38
+2_S4_(B128-E71)Average Distance: 610.94km	MSE: 23.58
+2_S4_(B128-E81)Average Distance: 684.28km	MSE: 26.86
+2_S4_(B128-E87)Average Distance: 721.97km	MSE: 31.09
+2_S4_(B128-E71)Average Distance: 591.56km	MSE: 21.0
+2_S4_(B128-E22)Average Distance: 217.18km	MSE: 3.21
+2_S4_(B128-E33)Average Distance: 269.44km	MSE: 5.36
+2_S4_(B128-E22)Average Distance: 310.67km	MSE: 6.04
+2_S4_(B128-E22)Average Distance: 258.64km	MSE: 3.93
+2_S4_(B64-E01).Average Distance: 636.15km	MSE: 32.05
+2_S4_(B64-E02).Average Distance: 365.45km	MSE: 7.95
+2_S4_(B64-E01).Average Distance: 640.56km	MSE: 31.22
+2_S4_(B64-E70).Average Distance: 732.98km	MSE: 34.28
+2_S4_(B64-E70).Average Distance: 1036.73km	MSE: 60.32
+2_S4_(B64-E70).Average Distance: 702.77km	MSE: 29.62
+2_S4_(B64-E70).Average Distance: 879.2km	MSE: 49.01
+2_S4_(B64-E70).Average Distance: 639.41km	MSE: 24.4
+2_S4_(B64-E70).Average Distance: 735.21km	MSE: 32.51
+2_S4_(B64-E70).Average Distance: 673.1km	MSE: 26.92
+2_S4_(B64-E70).Average Distance: 643.41km	MSE: 24.74
+2_S4_(B64-E70).Average Distance: 864.85km	MSE: 43.57
+2_S4_(B64-E70).Average Distance: 606.82km	MSE: 21.23
